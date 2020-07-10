@@ -18,8 +18,9 @@ import Link from "@material-ui/core/Link"
 import MenuIcon from "@material-ui/icons/Menu"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 import NotificationsIcon from "@material-ui/icons/Notifications"
-import { mainListItems, secondaryListItems } from "./listItems"
+import Navigations from "./Navigations"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { grey } from "@material-ui/core/colors"
 
 function Copyright() {
 	return (
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
 		}),
+		backgroundColor: grey[900],
 	},
 	appBarShift: {
 		marginLeft: drawerWidth,
@@ -192,7 +194,7 @@ export default function Dashboard() {
 						noWrap
 						className={classes.title}
 					>
-						Dashboard
+						UpMon!
 					</Typography>
 					<IconButton color='inherit'>
 						<Badge badgeContent={4} color='secondary'>
@@ -214,9 +216,7 @@ export default function Dashboard() {
 					</IconButton>
 				</div>
 				<Divider />
-				<List>{mainListItems}</List>
-				<Divider />
-				<List>{secondaryListItems}</List>
+				<Navigations />
 			</Drawer>
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
