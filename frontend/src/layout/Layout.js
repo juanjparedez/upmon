@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { useEffect } from "react"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -6,28 +6,28 @@ import Drawer from "@material-ui/core/Drawer"
 import Box from "@material-ui/core/Box"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
-import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 import IconButton from "@material-ui/core/IconButton"
 import Badge from "@material-ui/core/Badge"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
-import Paper from "@material-ui/core/Paper"
 import Link from "@material-ui/core/Link"
 import MenuIcon from "@material-ui/icons/Menu"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 import NotificationsIcon from "@material-ui/icons/Notifications"
 import Navigations from "./Navigations"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { Switch, Route, useHistory, useLocation } from "react-router-dom"
 import { grey } from "@material-ui/core/colors"
+import Home from "../pages/Home"
+import NotFound from "../pages/NotFound"
 
 function Copyright() {
 	return (
 		<Typography variant='body2' color='textSecondary' align='center'>
 			{"Copyright © "}
-			<Link color='inherit' href='https://material-ui.com/'>
-				Your Website
+			<Link color='inherit' href='https://arsat.com.ar/'>
+				REFEFO
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}
@@ -35,7 +35,7 @@ function Copyright() {
 	)
 }
 
-const drawerWidth = 240
+const drawerWidth = 180
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -117,47 +117,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-const Home = () => {
-	const classes = useStyles()
-	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-	return (
-		<Fragment>
-			<Grid item xs={12} md={8} lg={9}>
-				<Paper className={fixedHeightPaper}>
-					<h1>CHART</h1>
-				</Paper>
-			</Grid>
-
-			<Grid item xs={12} md={4} lg={3}>
-				<Paper className={fixedHeightPaper}>
-					<h1>Depositos</h1>
-				</Paper>
-			</Grid>
-
-			<Grid item xs={12}>
-				<Paper className={classes.paper}>
-					<h1>Ordenes</h1>
-				</Paper>
-			</Grid>
-		</Fragment>
-	)
-}
-
-const NoMatch = () => {
-	const classes = useStyles()
-	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-	return (
-		<Fragment>
-			<Grid item xs={12} md={8} lg={9}>
-				<Paper className={fixedHeightPaper}>
-					<h1>No Match</h1>
-				</Paper>
-			</Grid>
-		</Fragment>
-	)
-}
-
 export default function Dashboard() {
+	const history = useHistory()
+	const location = useLocation()
 	const classes = useStyles()
 	const [open, setOpen] = React.useState(false)
 	const handleDrawerOpen = () => {
@@ -166,6 +128,10 @@ export default function Dashboard() {
 	const handleDrawerClose = () => {
 		setOpen(false)
 	}
+	useEffect(() => {
+		console.log(location.pathname)
+		return () => {}
+	}, [location.pathname])
 
 	return (
 		<div className={classes.root}>
@@ -198,7 +164,12 @@ export default function Dashboard() {
 					</Typography>
 					<IconButton color='inherit'>
 						<Badge badgeContent={4} color='secondary'>
-							<NotificationsIcon />
+							<NotificationsIcon
+								onClick={(e) => {
+									e.preventDefault()
+									history.push("/")
+								}}
+							/>
 						</Badge>
 					</IconButton>
 				</Toolbar>
@@ -227,12 +198,9 @@ export default function Dashboard() {
 								<Home />
 							</Route>
 							<Route path='*'>
-								<NoMatch />
+								<NotFound />
 							</Route>
 						</Switch>
-						{/* 
-						
-						*/}
 					</Grid>
 					<Box pt={4}>
 						<Copyright />
