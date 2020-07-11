@@ -4,10 +4,8 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import DashboardIcon from "@material-ui/icons/Dashboard"
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
-import PeopleIcon from "@material-ui/icons/People"
-import BarChartIcon from "@material-ui/icons/BarChart"
-import LayersIcon from "@material-ui/icons/Layers"
+import AddIcon from "@material-ui/icons/Add"
+
 import { useHistory } from "react-router-dom"
 
 const Navigations = () => {
@@ -18,37 +16,24 @@ const Navigations = () => {
 				<ListItem
 					button
 					onClick={(e) => {
-						history.push("/prueba")
+						history.push("/")
 					}}
 				>
 					<ListItemIcon>
 						<DashboardIcon />
 					</ListItemIcon>
-					<ListItemText primary='Dashboard' />
+					<ListItemText primary='Hosts' />
 				</ListItem>
-				<ListItem button>
+				<ListItem
+					button
+					onClick={(e) => {
+						history.push("/add")
+					}}
+				>
 					<ListItemIcon>
-						<ShoppingCartIcon />
+						<AddIcon />
 					</ListItemIcon>
-					<ListItemText primary='Orders' />
-				</ListItem>
-				<ListItem button>
-					<ListItemIcon>
-						<PeopleIcon />
-					</ListItemIcon>
-					<ListItemText primary='Customers' />
-				</ListItem>
-				<ListItem button>
-					<ListItemIcon>
-						<BarChartIcon />
-					</ListItemIcon>
-					<ListItemText primary='Reports' />
-				</ListItem>
-				<ListItem button>
-					<ListItemIcon>
-						<LayersIcon />
-					</ListItemIcon>
-					<ListItemText primary='Integrations' />
+					<ListItemText primary='Agregar' />
 				</ListItem>
 			</List>
 		</Fragment>

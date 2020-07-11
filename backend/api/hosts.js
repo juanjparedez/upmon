@@ -23,10 +23,7 @@ router.post("/add", async (req, res) => {
 	if (ipToAdd.length === 0) {
 		const host = new Host({
 			ip: req.body.ip,
-			name: req.body.name ? req.body.name : "",
-			contacto: req.body.contacto ? req.body.contacto : "",
-			provincia: req.body.provincia ? req.body.provincia : "",
-			localidad: req.body.localidad ? req.body.localidad : "",
+			name: req.body.name,
 			isUp: false,
 			history: "history",
 		})

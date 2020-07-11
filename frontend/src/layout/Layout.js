@@ -19,15 +19,17 @@ import NotificationsIcon from "@material-ui/icons/Notifications"
 import Navigations from "./Navigations"
 import { Switch, Route, useHistory, useLocation } from "react-router-dom"
 import { grey } from "@material-ui/core/colors"
-import Home from "../pages/Home"
+// import Home from "../pages/Home"
 import NotFound from "../pages/NotFound"
+import Add from "../pages/add"
+import Hosts from "../pages/Hosts"
 
 function Copyright() {
 	return (
 		<Typography variant='body2' color='textSecondary' align='center'>
 			{"Copyright © "}
-			<Link color='inherit' href='https://arsat.com.ar/'>
-				REFEFO
+			<Link color='inherit' href='#'>
+				JAUNJPAREDEZ
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}
@@ -42,12 +44,13 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 	},
 	toolbar: {
-		paddingRight: 24, // keep right padding when drawer closed
+		paddingRight: 24,
 	},
 	toolbarIcon: {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "flex-end",
+
 		padding: "0 8px",
 		...theme.mixins.toolbar,
 	},
@@ -93,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 		}),
 		width: theme.spacing(7),
 		[theme.breakpoints.up("sm")]: {
-			width: theme.spacing(9),
+			width: theme.spacing(7),
 		},
 	},
 	appBarSpacer: theme.mixins.toolbar,
@@ -129,7 +132,6 @@ export default function Dashboard() {
 		setOpen(false)
 	}
 	useEffect(() => {
-		console.log(location.pathname)
 		return () => {}
 	}, [location.pathname])
 
@@ -195,7 +197,10 @@ export default function Dashboard() {
 					<Grid container spacing={3}>
 						<Switch>
 							<Route exact path='/'>
-								<Home />
+								<Hosts />
+							</Route>
+							<Route exact path='/add'>
+								<Add />
 							</Route>
 							<Route path='*'>
 								<NotFound />
