@@ -74,11 +74,13 @@ export default function Add() {
 				})
 			} else {
 				let isUsed = false
-				hosts.forEach((host) => {
-					if (values.ip === host.ip) {
-						isUsed = true
-					}
-				})
+				if (hosts) {
+					hosts.forEach((host) => {
+						if (values.ip === host.ip) {
+							isUsed = true
+						}
+					})
+				}
 				if (isUsed) {
 					setErrors({
 						...errors,

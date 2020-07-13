@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -19,23 +19,12 @@ import NotificationsIcon from "@material-ui/icons/Notifications"
 import Navigations from "./Navigations"
 import { Switch, Route, useHistory, useLocation } from "react-router-dom"
 import { grey } from "@material-ui/core/colors"
-// import Home from "../pages/Home"
+import Form from "../pages/Form"
 import NotFound from "../pages/NotFound"
-import Add from "../pages/add"
+import Add from "../pages/Add"
 import Hosts from "../pages/Hosts"
-
-function Copyright() {
-	return (
-		<Typography variant='body2' color='textSecondary' align='center'>
-			{"Copyright © "}
-			<Link color='inherit' href='#'>
-				JAUNJPAREDEZ
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	)
-}
+import History from "../pages/History"
+import axios from "axios"
 
 const drawerWidth = 180
 
@@ -120,11 +109,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-export default function Dashboard() {
+export default function Layout() {
 	const history = useHistory()
 	const location = useLocation()
 	const classes = useStyles()
 	const [open, setOpen] = React.useState(false)
+	const [hosts, setHosts] = useState(null)
+	const getHostsDown = async () => {
+		try {
+			let response = await (await axios.get("/hosts/down")).data
+			setHosts(response)
+		} catch (errorGettingHosts) {
+			console.log(errorGettingHosts)
+		}
+	}
+
+	useEffect(() => {
+		getHostsDown()
+	}, [location.pathname])
+
 	const handleDrawerOpen = () => {
 		setOpen(true)
 	}
@@ -165,7 +168,7 @@ export default function Dashboard() {
 						UpMon!
 					</Typography>
 					<IconButton color='inherit'>
-						<Badge badgeContent={4} color='secondary'>
+						<Badge badgeContent={hosts && hosts.length} color='secondary'>
 							<NotificationsIcon
 								onClick={(e) => {
 									e.preventDefault()
@@ -202,14 +205,17 @@ export default function Dashboard() {
 							<Route exact path='/add'>
 								<Add />
 							</Route>
+							<Route exact path='/editar/:id'>
+								<Form />
+							</Route>
+							<Route exact path='/history/:id'>
+								<History />
+							</Route>
 							<Route path='*'>
 								<NotFound />
 							</Route>
 						</Switch>
 					</Grid>
-					<Box pt={4}>
-						<Copyright />
-					</Box>
 				</Container>
 			</main>
 		</div>
